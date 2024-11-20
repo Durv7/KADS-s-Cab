@@ -3,6 +3,7 @@ import { useAuth } from '../../../AuthContext';
 import { toast } from 'react-toastify';
 import { toastSuccessStyle,toastErrorStyle } from '../../../utils/ToastStyle';
 import axios from 'axios';
+import { server } from '../../../../constants';
 
 export default function ProfileSettings() {
 
@@ -12,9 +13,9 @@ export default function ProfileSettings() {
     console.log("here");
     try {
       if(user.role==='customer'){
-        const response=await axios.get(`http://localhost:8080/api/customer/logout`, { withCredentials: true });
+        const response=await axios.get(`${server}/api/customer/logout`, { withCredentials: true });
       }else{
-        const response=await axios.get(`http://localhost:8080/api/driver/logout`, { withCredentials: true });
+        const response=await axios.get(`${server}/api/driver/logout`, { withCredentials: true });
       }
       toast.success("Logout Successfully!",toastSuccessStyle);
       setIsLogin(false);

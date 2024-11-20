@@ -1,4 +1,5 @@
 import { useContext,useState,createContext,useMemo, useEffect } from "react";
+import {server} from '../constants.js'
 import io from 'socket.io-client';
 
 const socketContext=createContext();
@@ -7,7 +8,8 @@ const getSocket=()=>useContext(socketContext);
 
 const SocketProvider=({children})=>{
     const socket=useMemo(()=>{
-        let newSocket=io('http://localhost:8080',{withCredentials:true})
+        // let backendUrl = `${import.meta.env.VITE_BACKEND_URL}`
+        let newSocket=io(server,{withCredentials:true})
         return newSocket;
     },[]);
 

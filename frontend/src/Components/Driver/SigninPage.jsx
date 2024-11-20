@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Footer from '../Footer';
 import Navbar from '../Navbar';
 import { useAuth } from '../../AuthContext';
+import { server } from '../../../constants';
 const SigninPage = () => {
     const [formData, setFormData] = useState({
         userName: '',
@@ -29,7 +30,7 @@ const SigninPage = () => {
         try {
             setIsLoading(true);
             console.log(formData);
-            const response = await axios.post('http://localhost:8080/api/driver/signin', formData, {
+            const response = await axios.post(`${server}/api/driver/signin`, formData, {
                 headers: {
                     'Content-Type': 'application/json',
 

@@ -6,6 +6,7 @@ import Navbar from '../Navbar';
 import { useAuth } from '../../AuthContext';
 import { toast } from 'react-toastify';
 import { toastSuccessStyle,toastErrorStyle } from '../../utils/ToastStyle';
+import { server } from '../../../constants';
 const SigninPage = () => {
   const [formData, setFormData] = useState({
     userName: '',
@@ -29,7 +30,7 @@ const SigninPage = () => {
     try {
       setisLoading(true);
       console.log(formData);
-      const response = await axios.post('http://localhost:8080/api/customer/signin', formData, {
+      const response = await axios.post(`${server}/api/customer/signin`, formData, {
         headers: {
           'Content-Type': 'application/json',
         }

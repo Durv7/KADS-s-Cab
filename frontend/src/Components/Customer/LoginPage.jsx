@@ -6,6 +6,7 @@ import Footer from '../Footer.jsx';
 import {useAuth} from '../../AuthContext.jsx'; 
 import {toast} from 'react-toastify';
 import { toastSuccessStyle,toastErrorStyle } from '../../utils/ToastStyle.js';
+import { server } from '../../../constants.js';
 
 
 export default function LoginPage() {
@@ -33,7 +34,7 @@ export default function LoginPage() {
         e.preventDefault();
         try {
             SetisLoading(true);
-            const response = await axios.post('http://localhost:8080/api/customer/login', formData, {
+            const response = await axios.post(`${server}/api/customer/login`, formData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
