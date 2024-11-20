@@ -11,6 +11,7 @@ const customerRoutes =require("./Routes/customer.routes.js");
 const driverRoutes =require("./Routes/driver.routes.js");
 const checkRoute=require("./Routes/checkRoute.js");
 const socketHandler = require("./socket.js");
+const {url}=require("./constants.js");
 
 dotenv.config({
     path:"./.env"
@@ -23,12 +24,12 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: url,
     credentials: true,
 }));
 const io = socketIo(server, {
     cors:{
-        origin:'http://localhost:5173',
+        origin:url,
         methods: ["GET", "POST", "PUT", "DELETE"],
         credentials: true,
     }
