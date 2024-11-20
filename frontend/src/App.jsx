@@ -3,7 +3,7 @@ import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CustLogin from './Components/Customer/LoginPage.jsx';
 import LandingPage from './Components/LandingPage.jsx';
-import CustSignin from './Components/customer/SigninPage.jsx';
+import CustSignin from './Components/Customer/SigninPage.jsx'
 import DriverSignin from './Components/Driver/SigninPage.jsx';
 import DriverLogin from './Components/Driver/LoginPage.jsx';
 import BookingPage from './Components/Customer/BookingPage.jsx';
