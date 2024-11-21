@@ -25,7 +25,7 @@ const corsOptions = {
     origin: [
       "http://localhost:5173",
       "http://localhost:4173",
-      process.env.CLIENT_URL,
+      process.env.FRONTEND_URL,
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
@@ -62,9 +62,9 @@ const io = socketIo(server, {
 socketHandler(io);
 
 app.use((req, res, next) => {
-    console.log('Origin:', req.headers.origin);
-    console.log('Path:', req.path);
-    next();
+    res.setHeader('Access-Control-Allow-Origin', `${process.env.FRONTEND_URL}`);
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 });
 
 
