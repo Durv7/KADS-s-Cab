@@ -23,18 +23,35 @@ app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 app.use(cookieParser());
 
+const allowedOrigins = [
+    process.env.FRONTEND_URL, // e.g., https://kads-s-cab.vercel.app
+    "http://localhost:5173"  // For local testing
+];
+
+// CORS Middleware
 app.use(cors({
-    origin: [`${process.env.FRONTEND_URL}`,'http://localhost:5173'],
-    credentials: true,
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            console.error('Blocked by CORS:', origin);
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true, // Allow credentials (cookies, auth headers, etc.)
 }));
 const io = socketIo(server, {
-    cors:{
-        origin:[`${process.env.FRONTEND_URL}`,'http://localhost:5173'],
+    cors: {
+        origin: [
+            process.env.FRONTEND_URL, // e.g., https://kads-s-cab.vercel.app
+            "http://localhost:5173",  // For local testing
+        ],
         methods: ["GET", "POST", "PUT", "DELETE"],
         credentials: true,
-    }
-    
-})
+    },
+});
+
+
 
 socketHandler(io);
 
