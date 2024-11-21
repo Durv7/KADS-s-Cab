@@ -38,6 +38,13 @@ const io = socketIo(server, {
 
 socketHandler(io);
 
+app.use((req, res, next) => {
+    console.log('Origin:', req.headers.origin);
+    console.log('Path:', req.path);
+    next();
+});
+
+
 app.use("/api/customer",customerRoutes);
 app.use("/api/driver",driverRoutes);
 app.use("/api/check_auth",checkRoute);
