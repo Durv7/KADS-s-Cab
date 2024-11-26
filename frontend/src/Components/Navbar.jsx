@@ -16,10 +16,11 @@ export default function Navbar({ isAuthPage }) {
     try {
       if(user.role==='customer'){
         const response=await axios.get(`${server}/api/customer/logout`, { withCredentials: true });
-      }else{
+      }else if(user.role==='driver'){
         const response=await axios.get(`${server}/api/driver/logout`, { withCredentials: true });
       }
       toast.success("Logout Successfully!",toastSuccessStyle);
+      document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       setIsLogin(false);
       setUser(null);
     } catch (error) {
