@@ -81,6 +81,7 @@ module.exports = (io) => {
                 }
 
                 const drivers = await avaliableDrivers.find({available:true}).select("location");
+                console.log(drivers);
                 io.to("customers").emit("avaliableDrivers",drivers);
                 
             } catch (err) {
@@ -90,7 +91,6 @@ module.exports = (io) => {
 
 
         socket.on("requestRide", async ({customerLocation,source,destination,cost,sourceCords,destiCords}) => {
-            console.log(source);
             const drivers = await avaliableDrivers.find({ available: true });
 
             let shortestPath = Infinity;
