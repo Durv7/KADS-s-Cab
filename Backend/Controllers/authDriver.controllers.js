@@ -99,9 +99,12 @@ const loginDriver = async (req, res) => {
 }
 
 const logoutDriver = async (req, res) => {
-  console.log("logout processing");
-  res.clearCookie("kads_token");
-  res.json({ message: "Logout Successfully" });
+  res.clearCookie("kads_token", {
+    httpOnly: true, 
+    secure: process.env.NODE_ENV === "production", 
+    sameSite: "None", 
+})
+.json({ message: "Logged out successfully" });
 }
 
 
