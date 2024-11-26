@@ -21,12 +21,20 @@ dotenv.config({
 
 connectDB(process.env.MONGO_URI);
 
+
+const prodOrigins=[process.env.ORIGIN_1,process.env.ORIGIN_]
+
+const allowedOrigins = process.env.NODE_ENV=='production'?prodOrigins:["http://localhost:5173","http://localhost:4173"];
+
 const corsOptions = {
-    origin: [
-      "http://localhost:5173",
-      "http://localhost:4173",
-      process.env.FRONTEND_URL,
-    ],
+    origin: (origin,callback)=>{
+        if(allowedOrigins.includes(origin)){
+            console.log(origin,allowedOrigins);
+            callback(null,true);
+        }else{
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   };
@@ -61,11 +69,11 @@ const io = socketIo(server, {
 
 socketHandler(io);
 
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', `${process.env.FRONTEND_URL}`);
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-});
+// app.use((req, res, next) => {
+//     res.setHeader('Access-Control-Allow-Origin', `${process.env.FRONTEND_URL}`);
+//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+//     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+// });
 
 
 app.use("/api/customer",customerRoutes);
