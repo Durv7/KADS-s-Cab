@@ -5,7 +5,8 @@ import Footer from '../Footer';
 import Navbar from '../Navbar';
 import { useAuth } from '../../AuthContext';
 import { server } from '../../../constants';
-
+import { toast } from 'react-toastify';
+import { toastSuccessStyle } from '../../utils/ToastStyle';
 const SigninPage = () => {
     const [formData, setFormData] = useState({
         userName: '',
@@ -38,6 +39,7 @@ const SigninPage = () => {
                 },
                 withCredentials: true
             },);
+            console.log(response)
             
             setSuccessMessage('User registered successfully!');
             setIsLogin(true);
@@ -45,6 +47,8 @@ const SigninPage = () => {
             setError(''); // Clear any previous errors
             setIsLoading(false);
             navigate('/driver/dashboard');
+
+            toast.success("Welcome To KADS's Cab",toastSuccessStyle);
         } catch (err) {
             console.log(err);
             if (err.response && err.response.data && err.response.data.message) {
@@ -57,6 +61,8 @@ const SigninPage = () => {
             setIsLoading(false);
             setIsLogin(false);
             setUser(false);
+
+            toast.success("Welcome To KADS's Cab",toastSuccessStyle);
         }
     };
 
