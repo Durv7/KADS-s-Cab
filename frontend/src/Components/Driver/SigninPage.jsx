@@ -39,8 +39,6 @@ const SigninPage = () => {
                 withCredentials: true
             },);
             
-           // toast.success("Welcome To KADS's Cabs",toastSuccessStyle);
-
             setSuccessMessage('User registered successfully!');
             setIsLogin(true);
             setUser({...response.data,role:'driver'});
@@ -54,7 +52,6 @@ const SigninPage = () => {
             } else {
                 setError('An unexpected error occurred. Please try again.');
             }
-           // toast.error("Signin Failed! Please Try Again.",toastErrorStyle);
 
             setSuccessMessage('');
             setIsLoading(false);
