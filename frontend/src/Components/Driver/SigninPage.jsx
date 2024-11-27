@@ -40,7 +40,7 @@ const SigninPage = () => {
                 withCredentials: true
             },);
             
-            toast.success("Welcome To KADS's Cabs",toastSuccessStyle);
+           // toast.success("Welcome To KADS's Cabs",toastSuccessStyle);
 
             setSuccessMessage('User registered successfully!');
             setIsLogin(true);
@@ -55,7 +55,7 @@ const SigninPage = () => {
             } else {
                 setError('An unexpected error occurred. Please try again.');
             }
-            toast.error("Signin Failed! Please Try Again.",toastErrorStyle);
+           // toast.error("Signin Failed! Please Try Again.",toastErrorStyle);
 
             setSuccessMessage('');
             setIsLoading(false);
