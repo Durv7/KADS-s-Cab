@@ -5,8 +5,7 @@ import Footer from '../Footer';
 import Navbar from '../Navbar';
 import { useAuth } from '../../AuthContext';
 import { server } from '../../../constants';
-import { toastErrorStyle,toastSuccessStyle } from '../../utils/ToastStyle';
-import { toast } from 'react-toastify';
+
 const SigninPage = () => {
     const [formData, setFormData] = useState({
         userName: '',
