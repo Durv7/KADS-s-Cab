@@ -14,8 +14,8 @@ const generateToken = (id) => {
 
 const setToken = (res, token) => {
     res.cookie('kads_token', token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production', // Use secure flag in production
+        httpOnly: false,
+        secure: true, // Use secure flag in production
         sameSite: 'none',
         maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
     });
@@ -99,8 +99,8 @@ const loginCustomer = async (req, res) => {
 const logoutCustomer = async (req, res) => {
 
     res.clearCookie("kads_token", {
-            httpOnly: true, 
-            secure: process.env.NODE_ENV === "production", 
+            httpOnly: false, 
+            secure: true, 
             sameSite: "None", 
         })
         .json({ message: "Logged out successfully" });

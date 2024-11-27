@@ -88,7 +88,7 @@ export default function Map({ socket, handleDriverPosition, rideDetails }) {
 
   return (
     <div className="bg-yellow-500 rounded-lg p-4 shadow-md h-[400px] lg:h-[600px]">
-      <MapContainer center={driverLocation || [16.7050, 74.2433]} zoom={13} className="w-full h-full rounded-lg">
+      <MapContainer center={driverLocation || [16.7050, 74.2433]} zoom={13} className="w-full h-full rounded-lg z-20">
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <Marker position={driverLocation || [16.7050, 74.2433]} icon={defaultMarker}>
           <Popup>Your Location</Popup>

@@ -33,7 +33,8 @@ const SigninPage = () => {
       const response = await axios.post(`${server}/api/customer/signin`, formData, {
         headers: {
           'Content-Type': 'application/json',
-        }
+        },
+        withCredentials: true
       },);
       console.log(response);
 
