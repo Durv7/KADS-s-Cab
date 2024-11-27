@@ -16,11 +16,11 @@ const SigninPage = () => {
         fullName: '',
         city: '',
     });
-    const {setIsLogin,setUser,user,isLogin} =useAuth();
+    const { setIsLogin, setUser, user, isLogin } = useAuth();
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const navigate=useNavigate();
+    const [isLoading, setisLoading] = useState(false);
+    const navigate = useNavigate();
 
 
     const handleChange = (e) => {
@@ -30,25 +30,24 @@ const SigninPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            setIsLoading(true);
+            setisLoading(true);
             console.log(formData);
             const response = await axios.post(`${server}/api/driver/signin`, formData, {
                 headers: {
                     'Content-Type': 'application/json',
-
                 },
                 withCredentials: true
             },);
-            console.log(response)
-            
+            console.log(response);
+
+            toast.success("Welcome To KADS's Cabs", toastSuccessStyle);
             setSuccessMessage('User registered successfully!');
             setIsLogin(true);
-            setUser({...response.data,role:'driver'});
+            setUser({ ...response.data, role: 'driver' });
             setError(''); // Clear any previous errors
-            setIsLoading(false);
+            setisLoading(false);
             navigate('/driver/dashboard');
 
-            toast.success("Welcome To KADS's Cab",toastSuccessStyle);
         } catch (err) {
             console.log(err);
             if (err.response && err.response.data && err.response.data.message) {
@@ -57,18 +56,17 @@ const SigninPage = () => {
                 setError('An unexpected error occurred. Please try again.');
             }
 
+            toast.error("Signin Failed! Please Try Again.", toastErrorStyle);
             setSuccessMessage('');
-            setIsLoading(false);
+            setisLoading(false);
             setIsLogin(false);
-            setUser(false);
-
-            toast.success("Welcome To KADS's Cab",toastSuccessStyle);
+            setUser(null);
         }
     };
 
     return (
         <div>
-            <Navbar isAuthPage={true}/>
+            <Navbar isAuthPage={true} />
             <div className="flex items-center justify-center min-h-fit bg-gray-100">
                 <div className="w-full max-w-md p-8 space-y-6 bg-white my-16 rounded-lg shadow-md">
                     <h2 className="text-2xl font-bold text-center text-gray-800">Sign Up to Book Your Ride</h2>
@@ -126,31 +124,31 @@ const SigninPage = () => {
                             />
                         </div>
 
-                        <div className= 'flex '>
+                        <div className='flex '>
                             <div className='basis-1/4 md:basis-1/3 '>
-                            <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone Number</label>
-                            <input
-                                type="tel"
-                                id="phone"
-                                name="phoneNo"
-                                value={formData.phoneNo}
-                                onChange={handleChange}
-                                required
-                                className="mx-1 mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                            />
+                                <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone Number</label>
+                                <input
+                                    type="tel"
+                                    id="phone"
+                                    name="phoneNo"
+                                    value={formData.phoneNo}
+                                    onChange={handleChange}
+                                    required
+                                    className="mx-1 mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                                />
                             </div>
 
                             <div className='basis-1/4 md:basis-1/3'>
-                            <label htmlFor="city" className="block text-sm font-medium text-gray-700">City</label>
-                            <input
-                                type="text"
-                                id="city"
-                                name="city"
-                                value={formData.city}
-                                onChange={handleChange}
-                                required
-                                className="mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                            />
+                                <label htmlFor="city" className="block text-sm font-medium text-gray-700">City</label>
+                                <input
+                                    type="text"
+                                    id="city"
+                                    name="city"
+                                    value={formData.city}
+                                    onChange={handleChange}
+                                    required
+                                    className="mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                                />
                             </div>
                         </div>
 
