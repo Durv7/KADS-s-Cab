@@ -1,12 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup,Polyline } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
+import { defaultMarker } from '../../../../constants';
+import markerImg from '../../../assets/sourceDestination.png'
 import axios from 'axios';
 
 export default function Map({ socket, handleDriverPosition, rideDetails }) {
   const [driverLocation, setDriverLocation] = useState(null);
   const lastEmitTimeRef = useRef(0);
   const [route, setRoute] = useState([]);
+
+  const markerIcon=L.icon({
+    iconUrl:markerImg,
+    iconSize:[45,45],
+    iconAnchor:[20,40],
+    popupAnchor:[0,-40]
+})
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -75,12 +84,12 @@ export default function Map({ socket, handleDriverPosition, rideDetails }) {
     <div className="bg-yellow-500 rounded-lg p-4 shadow-md h-[400px] lg:h-[600px]">
       <MapContainer center={driverLocation || [16.7050, 74.2433]} zoom={13} className="w-full h-full rounded-lg">
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        <Marker position={driverLocation || [16.7050, 74.2433]}>
+        <Marker position={driverLocation || [16.7050, 74.2433]} icon={defaultMarker}>
           <Popup>Your Location</Popup>
         </Marker>
 
         {rideDetails && rideDetails.customerLocation &&
-          <Marker position={rideDetails.customerLocation}>
+          <Marker position={rideDetails.customerLocation} icon={defaultMarker}>
             <Popup>
               Your Customer
             </Popup>
@@ -88,7 +97,7 @@ export default function Map({ socket, handleDriverPosition, rideDetails }) {
         }
         {rideDetails &&
           rideDetails.sourceCords &&
-          <Marker position={rideDetails.sourceCords}>
+          <Marker position={rideDetails.sourceCords} icon={markerIcon}>
             <Popup>
               Pickup Location
             </Popup>

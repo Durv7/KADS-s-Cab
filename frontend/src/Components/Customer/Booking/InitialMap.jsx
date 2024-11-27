@@ -7,6 +7,7 @@ import princing from '../../../utils/PriceCal.js';
 import InfoPanel from "./InfoPanel.jsx";
 import markerImg from "../../../assets/sourceDestination.png"
 import driversImg from '../../../assets/carIcon.png'
+import { defaultMarker } from "../../../../constants.js";
 import L from 'leaflet';
 export default function InitialMap({ source, destination,socket,customerLocation,handlePricing,isRideAccepted,driverLocation,rideCompletion }) {
     
@@ -116,7 +117,7 @@ export default function InitialMap({ source, destination,socket,customerLocation
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 />
                 {customerLocation.lat != null &&
-                    <Marker position={customerLocation}>
+                    <Marker position={customerLocation} icon={defaultMarker}>
                         <Popup>You Are Here</Popup>
                     </Marker>
                 }
@@ -138,6 +139,7 @@ export default function InitialMap({ source, destination,socket,customerLocation
                 {!rideCompletion && isRideAccepted ? 
                     <Marker
                         position={driverLocation}
+                        icon={defaultMarker}
                     >
                         <Popup>Your Driver</Popup>
                     </Marker>: drivers.map((driver, index) => (
