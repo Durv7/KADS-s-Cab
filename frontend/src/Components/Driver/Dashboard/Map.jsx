@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup,Polyline } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
-import { defaultMarker } from '../../../../constants';
 import markerImg from '../../../assets/sourceDestination.png'
 import axios from 'axios';
 
@@ -9,6 +8,13 @@ export default function Map({ socket, handleDriverPosition, rideDetails }) {
   const [driverLocation, setDriverLocation] = useState(null);
   const lastEmitTimeRef = useRef(0);
   const [route, setRoute] = useState([]);
+
+  const defaultMarker=L.icon({
+    iconUrl:defaultMarker,
+    iconSize:[45,45],
+    iconAnchor:[20,40],
+    popupAnchor:[0,-40]
+})
 
   const markerIcon=L.icon({
     iconUrl:markerImg,

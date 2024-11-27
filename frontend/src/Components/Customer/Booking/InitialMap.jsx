@@ -7,8 +7,8 @@ import princing from '../../../utils/PriceCal.js';
 import InfoPanel from "./InfoPanel.jsx";
 import markerImg from "../../../assets/sourceDestination.png"
 import driversImg from '../../../assets/carIcon.png'
-import { defaultMarker } from "../../../../constants.js";
 import L from 'leaflet';
+import  defaultMarkerImg  from '../../../assets/defaultMarker.png';
 export default function InitialMap({ source, destination,socket,customerLocation,handlePricing,isRideAccepted,driverLocation,rideCompletion }) {
     
     const mapRef = useRef(null); useRef
@@ -23,6 +23,13 @@ export default function InitialMap({ source, destination,socket,customerLocation
         [16.5813, 73.7559], // Southwest corner
         [16.9737, 74.4887]  // Northeast corner
     ];
+
+    const defaultMarker=L.icon({
+        iconUrl:defaultMarkerImg,
+        iconSize:[45,45],
+        iconAnchor:[20,40],
+        popupAnchor:[0,-40]
+    })
 
     const carIcon=L.icon({
         iconUrl:driversImg,
