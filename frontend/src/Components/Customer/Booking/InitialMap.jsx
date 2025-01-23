@@ -8,57 +8,41 @@ import InfoPanel from "./InfoPanel.jsx";
 import markerImg from "../../../assets/sourceDestination.png"
 import driversImg from '../../../assets/carIcon.png'
 import L from 'leaflet';
-import markerIcon from 'leaflet/dist/images/marker-icon.png';
-import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
-import markerShadow from 'leaflet/dist/images/marker-shadow.png';
-
-
-// import  defaultMarkerImg  from '../../../assets/defaultMarker.png';
-export default function InitialMap({ source, destination, socket, customerLocation, handlePricing, isRideAccepted, driverLocation, rideCompletion }) {
-
+import  defaultMarkerImg  from '../../../assets/defaultMarker.png';
+export default function InitialMap({ source, destination,socket,customerLocation,handlePricing,isRideAccepted,driverLocation,rideCompletion }) {
+    
     const mapRef = useRef(null); useRef
     const [route, setRoute] = useState([]);
     const [distance, setDistance] = useState(null);
     const [duration, setDuration] = useState(null);
     const [cost, setCost] = useState(null);
     const [drivers, setDrivers] = useState([]);
-
+    
 
     const kolhapurBounds = [
         [16.5813, 73.7559], // Southwest corner
         [16.9737, 74.4887]  // Northeast corner
     ];
 
-    // Define custom icon
-    const customIcon = new L.Icon({
-        iconUrl: 'leaflet/dist/images/marker-icon.png',
-        iconRetinaUrl: markerIcon2x,
-        shadowUrl: markerShadow,
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41],
-    });
-
-    // const defaultMarker=L.icon({
-    //     iconUrl:defaultMarkerImg,
-    //     iconSize:[45,45],
-    //     iconAnchor:[20,40],
-    //     popupAnchor:[0,-40]
-    // })
-
-    const carIcon = L.icon({
-        iconUrl: driversImg,
-        iconSize: [45, 45],
-        iconAnchor: [20, 40],
-        popupAnchor: [0, -40]
+    const defaultMarker=L.icon({
+        iconUrl:defaultMarkerImg,
+        iconSize:[45,45],
+        iconAnchor:[20,40],
+        popupAnchor:[0,-40]
     })
 
-    const markerIcon = L.icon({
-        iconUrl: markerImg,
-        iconSize: [45, 45],
-        iconAnchor: [20, 40],
-        popupAnchor: [0, -40]
+    const carIcon=L.icon({
+        iconUrl:driversImg,
+        iconSize:[45,45],
+        iconAnchor:[20,40],
+        popupAnchor:[0,-40]
+    })
+
+    const markerIcon=L.icon({
+        iconUrl:markerImg,
+        iconSize:[45,45],
+        iconAnchor:[20,40],
+        popupAnchor:[0,-40]
     })
 
     const getRouteStoD = async () => {
@@ -89,7 +73,7 @@ export default function InitialMap({ source, destination, socket, customerLocati
         getRouteStoD();
     }, [source, destination])
 
-    const getRouteDtoC = async () => {
+    const getRouteDtoC=async()=>{
         if (destination != null) {
             let Mapboxtoken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
             const directionsURL = `https://api.mapbox.com/directions/v5/mapbox/driving/${driverLocation.lng},${driverLocation.lat};${source.lng},${source.lat}?geometries=geojson&access_token=${Mapboxtoken}`;
@@ -105,9 +89,9 @@ export default function InitialMap({ source, destination, socket, customerLocati
         }
     }
 
-    useEffect(() => {
+    useEffect(()=>{
         getRouteDtoC();
-    }, [driverLocation, source]);
+    },[driverLocation,source]);
 
     useEffect(() => {
         if (socket) {
@@ -140,7 +124,7 @@ export default function InitialMap({ source, destination, socket, customerLocati
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 />
                 {customerLocation.lat != null &&
-                    <Marker position={customerLocation} icon={customIcon}>
+                    <Marker position={customerLocation} icon={defaultMarker}>
                         <Popup>You Are Here</Popup>
                     </Marker>
                 }
@@ -157,23 +141,23 @@ export default function InitialMap({ source, destination, socket, customerLocati
                     </Marker>
                 }
                 {source && destination && route.length > 0 && <Polyline positions={route} color="#374151" />}
-                {source && destination && distance != null && duration != null && <InfoPanel distance={distance} duration={duration} cost={cost} />}
+                {source && destination&& distance != null && duration != null && <InfoPanel distance={distance} duration={duration} cost={cost} />}
 
-                {!rideCompletion && isRideAccepted ?
+                {!rideCompletion && isRideAccepted ? 
                     <Marker
                         position={driverLocation}
-
+                        icon={defaultMarker}
                     >
                         <Popup>Your Driver</Popup>
-                    </Marker> : drivers.map((driver, index) => (
-                        <Marker
-                            key={index}
-                            position={[driver.location.coordinates[1], driver.location.coordinates[0]]}
-                            icon={carIcon}
-                        >
-                            <Popup>Avaliable Driver</Popup>
-                        </Marker>
-                    ))}
+                    </Marker>: drivers.map((driver, index) => (
+                    <Marker
+                        key={index}
+                        position={[driver.location.coordinates[1], driver.location.coordinates[0]]}
+                        icon={carIcon}
+                    >
+                        <Popup>Avaliable Driver</Popup>
+                    </Marker>
+                ))} 
             </MapContainer>
         </>
     )
