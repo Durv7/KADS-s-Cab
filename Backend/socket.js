@@ -59,11 +59,11 @@ module.exports = (io) => {
                                 },
                                 { new: true }
                             );
-                            if(updatedDriver){
-                                console.log("Driver location updated:", updatedDriver);
-                            }else{
-                                console.log("failed to update:",err);
-                            }
+                            // if(updatedDriver){
+                            //     console.log("Driver location updated:", updatedDriver);
+                            // }else{
+                            //     console.log("failed to update:",err);
+                            // }
                         }
                     } else {
                         const newDriver = new avaliableDrivers({
@@ -81,7 +81,7 @@ module.exports = (io) => {
                 }
 
                 const drivers = await avaliableDrivers.find({available:true}).select("location");
-                console.log(drivers);
+                // console.log(drivers);
                 io.to("customers").emit("avaliableDrivers",drivers);
                 
             } catch (err) {
