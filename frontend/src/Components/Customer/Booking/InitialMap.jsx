@@ -26,7 +26,7 @@ export default function InitialMap({ source, destination,socket,customerLocation
         [16.9737, 74.4887]  // Northeast corner
     ];
 
-    const defaultMarker=L.icon({
+    const defaultMarker=new L.icon({
         iconUrl:defaultMarkerImg,
         iconSize:[45,45],
         iconAnchor:[20,40],
@@ -126,7 +126,7 @@ export default function InitialMap({ source, destination,socket,customerLocation
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 />
                 {customerLocation.lat != null &&
-                    <Marker position={customerLocation} icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor:[0,-40]})}>
+                    <Marker position={customerLocation} icon={defaultMarker}>
                         <Popup>You Are Here</Popup>
                     </Marker>
                 }
