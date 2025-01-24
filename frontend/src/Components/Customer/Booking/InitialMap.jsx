@@ -8,6 +8,8 @@ import InfoPanel from "./InfoPanel.jsx";
 import markerImg from "../../../assets/sourceDestination.png"
 import driversImg from '../../../assets/carIcon.png'
 import L from 'leaflet';
+import markerIconPng from "leaflet/dist/images/marker-icon.png"
+import {Icon} from 'leaflet'
 import  defaultMarkerImg  from '../../../assets/defaultMarker.png';
 export default function InitialMap({ source, destination,socket,customerLocation,handlePricing,isRideAccepted,driverLocation,rideCompletion }) {
     
@@ -124,7 +126,7 @@ export default function InitialMap({ source, destination,socket,customerLocation
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 />
                 {customerLocation.lat != null &&
-                    <Marker position={customerLocation} icon={defaultMarker}>
+                    <Marker position={customerLocation} icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor:[0,-40]})}>
                         <Popup>You Are Here</Popup>
                     </Marker>
                 }
