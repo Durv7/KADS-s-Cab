@@ -161,12 +161,15 @@ module.exports = (io) => {
                 ride.status="ongoing";
                 await ride.save();
 
+                const roomId = `room_${rideId}`;
+                socket.join(roomId);
                 io.to(custSocketId).emit("rideAccepted", {
                     driver: ride.driver,
                     source: ride.source,
                     destination: ride.destination,
                     driverLocation
                 });
+                io.sockets.sockets.get(custSocketId).join(roomId);
             }else if(action==="decline"){
                 const driver= await avaliableDrivers.findById(ride.driver);
                 driver.available=true;
@@ -176,6 +179,10 @@ module.exports = (io) => {
             }
 
 
+        })
+
+        socket.on("locationUpdate",({rideId,driverLocation})=>{
+            io.to(`room_${rideId}`).emit("driverLocationUpdate",driverLocation);
         })
 
         socket.on("rideCompleted", async ({rideId,custSocketId}) => {
@@ -190,6 +197,7 @@ module.exports = (io) => {
                 await driver.save();
 
                 io.to(custSocketId).emit("reachedDestination", "You have reached your destination, Thank You!!");
+                io.socketsLeave(`room_${rideId}`);
             }
         });
 

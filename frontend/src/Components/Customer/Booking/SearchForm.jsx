@@ -67,6 +67,10 @@ export default function SearchForm({ onSelectLocation, currentLocation, socket,c
             toast.success(msg,toastSuccessStyle);
         }
 
+        const driverLocationUpdate =(driverLocation)=>{
+            handleDriverLocation(driverLocation);
+        }
+
         socket.on("rideAccepted",rideAccepted)
 
         socket.on("noDriversAvailable",noDriversAvailable);
@@ -77,12 +81,15 @@ export default function SearchForm({ onSelectLocation, currentLocation, socket,c
 
         socket.on("reachedDestination",rideCompleted);
 
+        socket.on("driverLocationUpdate",driverLocationUpdate);
+
         return(()=>{
             socket.off("noDriversAvailable",noDriversAvailable);
             socket.off("driverAssigned",driverAssigned);
             socket.off("rideDeclined",rideDeclined);
             socket.off("rideAccepted",rideAccepted);
             socket.off("reachedDestination",rideCompleted);
+            socket.off("driverLocationUpdate",driverLocationUpdate);
         })
     })
 

@@ -83,6 +83,12 @@ export default function Map({ socket, handleDriverPosition, rideDetails }) {
     getRoute();
   },[driverLocation]);
 
+  useEffect(()=>{
+    if(rideDetails){
+      socket.emit("locationUpdate", {rideId:rideDetails.rideId,driverLocation});
+    }
+  })
+
 
 
 
